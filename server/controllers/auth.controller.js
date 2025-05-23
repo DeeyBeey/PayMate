@@ -13,7 +13,7 @@ export const signup = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return next(errorHandler(400, 'Email already registered'));
+      return next(errorHandler(400, 'Account exists! Please Sign in.'));
     }
 
     const hashedPassword = bcryptjs.hashSync(password, 10);

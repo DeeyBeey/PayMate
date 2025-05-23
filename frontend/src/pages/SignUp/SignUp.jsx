@@ -50,12 +50,15 @@ export default function SignUp() {
           password: formData.password,
         }),
       });
+
       const data = await res.json();
-      if (data.error) {
+
+      if (!res.ok) {
         setLoading(false);
-        setError(data.error);
+        setError(data.message || 'Signup failed');
         return;
       }
+
       setLoading(false);
       navigate('/sign-in');
     } catch (err) {
