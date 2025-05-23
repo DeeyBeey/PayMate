@@ -5,23 +5,39 @@ import OAuth from '../../components/OAuth';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
+    confirmEmail: '',
     password: ''
   });
+  const [passwordRules, setPasswordRules] = useState({
+    length: false,
+    number: false,
+    special: false,
+    });
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
+  const { id, value } = e.target;
+
+  setFormData((prev) => ({
+    ...prev,
+    [id]: value,
+  }));
+
+  if (id === "password") {
+    setPasswordRules(getPasswordRules(value));
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.email !== formData.confirmEmail) {
+      setError("Emails do not match.");
+      return;
+    }
     try {
       setLoading(true);
       const res = await fetch('/server/auth/signup', {
@@ -29,36 +45,36 @@ export default function SignUp() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
       const data = await res.json();
-      console.log(data);
       if (data.error) {
         setLoading(false);
         setError(data.error);
         return;
       }
       setLoading(false);
-      navigate('/sign-in'); // Redirect to login page after successful signup
+      navigate('/sign-in');
     } catch (err) {
       setLoading(false);
       setError('An error occurred. Please try again.');
     }
   };
 
+  const getPasswordRules = (password) => ({
+  length: password.length >= 8,
+  number: /\d/.test(password),
+  special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+  });
+
+
   return (
     <div className="signup-container">
       <h2>Sign Up</h2>
-      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          id="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
         <input
           type="email"
           placeholder="Email"
@@ -67,6 +83,16 @@ export default function SignUp() {
           onChange={handleChange}
           required
         />
+
+        <input
+          type="email"
+          placeholder="Confirm Email"
+          id="confirmEmail"
+          value={formData.confirmEmail}
+          onChange={handleChange}
+          required
+        />
+
         <input
           type="password"
           placeholder="Password"
@@ -75,7 +101,20 @@ export default function SignUp() {
           onChange={handleChange}
           required
         />
-        <button disabled={loading}>
+
+        <div className="password-rules">
+          <p style={{ color: passwordRules.length ? 'green' : 'gray' }}>
+            • At least 8 characters
+          </p>
+          <p style={{ color: passwordRules.number ? 'green' : 'gray' }}>
+            • Contains a number
+          </p>
+          <p style={{ color: passwordRules.special ? 'green' : 'gray' }}>
+            • Contains a special character
+          </p>
+        </div>
+
+        <button disabled={loading || Object.values(passwordRules).includes(false)}>
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
         <OAuth />

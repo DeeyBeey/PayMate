@@ -158,14 +158,6 @@ export default function Profile() {
           )}
         </p>
         <input
-          type='text'
-          placeholder='username'
-          defaultValue={currentUser.username}
-          id='username'
-          className="form-input"
-          onChange={handleChange}
-        />
-        <input
           type='email' 
           placeholder='email'
           id='email'
