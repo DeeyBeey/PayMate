@@ -1,13 +1,15 @@
-import {useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react'
+import { Link, useNavigate, useLocation} from 'react-router-dom';
 import './SignIn.css'
 import OAuth from '../../components/OAuth'
 import {useDispatch, useSelector} from 'react-redux'
-import { signInStart, signInSuccess, signInFailure } from '../../redux/user/userSlice';
+import { signInStart, signInSuccess, signInFailure, clearError } from '../../redux/user/userSlice';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
+  const location = useLocation();
+  const successMessage = location.state?.successMessage || null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -16,6 +18,10 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
+  
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,6 +80,7 @@ export default function SignIn() {
         </Link>
       </div>
       {error && <p className="text-red-500">{error}</p>}
+      {successMessage && <p className="text-green-600 text-center mb-2">{successMessage}</p>}
     </div>
   );
     

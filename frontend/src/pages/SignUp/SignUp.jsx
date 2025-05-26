@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './SignUp.css';
 import OAuth from '../../components/OAuth';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export default function SignUp() {
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -60,7 +62,7 @@ export default function SignUp() {
       }
 
       setLoading(false);
-      navigate('/sign-in');
+      navigate('/sign-in', { state: { successMessage: 'Account created! Please verify your email (spam folder too!) before signing in.'} });
     } catch (err) {
       setLoading(false);
       setError('An error occurred. Please try again.');
@@ -96,14 +98,19 @@ export default function SignUp() {
           required
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+        <div className="password-input-wrapper">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            id="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <span className="password-toggle-icon" onClick={() => setShowPassword(prev => !prev)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
         <div className="password-rules">
           <p style={{ color: passwordRules.length ? 'green' : 'gray' }}>

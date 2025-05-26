@@ -82,6 +82,31 @@
     margin-top: 10px;
     text-align: center;
   }
+  
+  .password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #555;
+  font-size: 1rem;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-icon:hover {
+  color: #000;
+}
 
   .password-rules p {
   font-size: 0.85rem;

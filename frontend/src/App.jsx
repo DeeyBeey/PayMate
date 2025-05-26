@@ -12,6 +12,7 @@ import AssignSplits from "./pages/AssignSplits/AssignSplits";
 import ViewSplits from "./pages/ViewSplits/ViewSplits";
 import History from "./pages/History/History";
 import About from "./pages/About/About";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 function App() {
   return (
@@ -73,6 +74,8 @@ function App() {
             <Profile />
             </>
           } />
+
+        <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
       </Routes>
     </BrowserRouter>
