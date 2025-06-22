@@ -4,9 +4,11 @@ import './SignIn.css'
 import OAuth from '../../components/OAuth'
 import {useDispatch, useSelector} from 'react-redux'
 import { signInStart, signInSuccess, signInFailure, clearError } from '../../redux/user/userSlice';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const { loading, error } = useSelector((state) => state.user);
   const location = useLocation();
   const successMessage = location.state?.successMessage || null;
@@ -60,14 +62,20 @@ export default function SignIn() {
           onChange={handleChange}
           required
         />
+      <div className='password-input-wrapper'>
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Password"
           id="password"
           value={formData.password}
           onChange={handleChange}
           required
         />
+        <span className="password-toggle-icon" onClick={() => setShowPassword(prev => !prev)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
+      </div>
+        
         <button disabled={loading}>
           {loading ? 'Loading...' : 'Sign In'}
         </button>

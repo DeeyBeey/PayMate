@@ -60,7 +60,6 @@
   color: #000;
 }
 
-/* ✨ Highlight Total row in footer */
 .split-table tfoot .total-footer {
   background-color: #e1edf4;
   font-weight: bold;

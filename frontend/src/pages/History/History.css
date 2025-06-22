@@ -21,12 +21,25 @@
   }
   
   .history-item {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #3B5A78;
-    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #f3fafa;
+    border-radius: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+  }
+
+  .receipt-info {
+    flex: 1;
   }
   
+  .history-actions {
+    display: flex;
+    gap: 10px;
+  }
+
   .history-item a {
     text-decoration: none;
     color: #FFFFFF;
@@ -36,3 +49,23 @@
     justify-content: center;
   }
   
+  .view-link,
+  .edit-link {
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: 0.3s ease-in-out;
+  }
+
+  .edit-link,
+  .view-link {
+    background-color: #3B5A78;
+  }
+
+  .edit-link:hover,
+  .view-link:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+  }

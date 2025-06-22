@@ -83,6 +83,27 @@
     text-align: center;
   }
 
+  .password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #555;
+  font-size: 1rem;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
   @media (max-width: 600px) {
     body {
       display: flex;

@@ -53,13 +53,14 @@ const ReceiptUpload = () => {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data && !data.error) {
         setMessage('✅ Receipt processed successfully!');
         console.log(data); // Optional: store data in global state or pass to next page
         setReceiptId(data._id);
         setIsProcessed(true);
       } else {
-        setMessage(`❌ Upload failed: ${data.message}`);
+        const errorMsg = data.error || data.message || 'Upload failed.';
+        setMessage(`❌ ${errorMsg}`);
       }
     } catch (err) {
       console.error(err);
@@ -90,7 +91,7 @@ const ReceiptUpload = () => {
             <input
               type="file"
               id="file-upload"
-              accept="image/*,application/pdf"
+              accept="image/jpeg,image/png,image/jpg"
               onChange={handleFileChange}
               hidden
             />

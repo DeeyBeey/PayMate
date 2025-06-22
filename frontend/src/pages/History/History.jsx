@@ -28,9 +28,13 @@ export default function History() {
         <ul className="history-list">
           {splits.map(split => (
             <li key={split._id} className="history-item">
-              <Link to={`/view-splits/${split._id}`}>
+              <div className="receipt-info">
                 🧾 {split.receiptId?.store || 'Unknown Store'} – {split.receiptId?.date?.slice(0, 10)}
-              </Link>
+              </div>
+              <div className="history-actions">
+                <Link to={`/view-splits/${split._id}`} className="view-link">View</Link>
+                <Link to={`/assign-splits/${split.receiptId?._id}`} className="edit-link">Edit</Link>
+              </div>
             </li>
           ))}
         </ul>

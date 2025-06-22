@@ -22,6 +22,9 @@ class ReceiptProcessor:
         try:
             self.raw_text = self._enhanced_ocr(image_path)
 
+            if not self.raw_text or len(self.raw_text.strip()) < 20:
+                return {"error": "No relevant text found. Please check your receipt image."}
+
             items = self._ai_item_parser()
 
             return {

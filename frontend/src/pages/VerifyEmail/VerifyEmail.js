@@ -19,7 +19,7 @@ export default function VerifyEmail() {
         }
 
         setStatus('Email verified successfully!');
-        setTimeout(() => navigate('/sign-in'), 2000);
+        setTimeout(() => navigate('/sign-in'), 5000);
       } catch (err) {
         setStatus(`${err.message}`);
       }
